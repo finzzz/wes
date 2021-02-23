@@ -1,5 +1,4 @@
-DESCRIPTION
-=========== 
+# DESCRIPTION
 This tool compares a targets patch levels against the Microsoft vulnerability
 database in order to detect potential missing patches on the target. It also
 notifies the user if there are public exploits and Metasploit modules
@@ -26,69 +25,25 @@ It was heavily inspired by Linux_Exploit_Suggester by Pentura.
 
 Blog Post: "Introducing Windows Exploit Suggester", https://blog.gdssecurity.com/labs/2014/7/11/introducing-windows-exploit-suggester.html
 
-USAGE
-=====
-update the database
+# INSTALL
 ```
-$ ./windows-exploit-suggester.py --update
-[*] initiating...
-[*] successfully requested base url
-[*] scraped ms download url
-[+] writing to file 2014-06-06-mssb.xlsx
-[*] done
-```
-install dependencies
-
-(install python-xlrd, $ pip install xlrd --upgrade)
-
-feed it "systeminfo" input, and point it to the microsoft database
-```
-$ ./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo win7sp1-systeminfo.txt 
-[*] initiating...
-[*] database file detected as xls or xlsx based on extension
-[*] reading from the systeminfo input file
-[*] querying database file for potential vulnerabilities
-[*] comparing the 15 hotfix(es) against the 173 potential bulletins(s)
-[*] there are now 168 remaining vulns
-[+] windows version identified as 'Windows 7 SP1 32-bit'
-[*] 
-[M] MS14-012: Cumulative Security Update for Internet Explorer (2925418) - Critical
-[E] MS13-101: Vulnerabilities in Windows Kernel-Mode Drivers Could Allow Elevation of Privilege (2880430) - Important
-[M] MS13-090: Cumulative Security Update of ActiveX Kill Bits (2900986) - Critical
-[M] MS13-080: Cumulative Security Update for Internet Explorer (2879017) - Critical
-[M] MS13-069: Cumulative Security Update for Internet Explorer (2870699) - Critical
-[M] MS13-059: Cumulative Security Update for Internet Explorer (2862772) - Critical
-[M] MS13-055: Cumulative Security Update for Internet Explorer (2846071) - Critical
-[M] MS13-053: Vulnerabilities in Windows Kernel-Mode Drivers Could Allow Remote Code Execution (2850851) - Critical
-[M] MS13-009: Cumulative Security Update for Internet Explorer (2792100) - Critical
-[M] MS13-005: Vulnerability in Windows Kernel-Mode Driver Could Allow Elevation of Privilege (2778930) - Important
-[*] done
+sudo apt install pipenv
+make
 ```
 
-possible exploits for an operating system can be used without hotfix data
+# USAGE
 ```
-$ ./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --ostext 'windows server 2008 r2' 
-[*] initiating...
-[*] database file detected as xls or xlsx based on extension
-[*] getting OS information from command line text
-[*] querying database file for potential vulnerabilities
-[*] comparing the 0 hotfix(es) against the 196 potential bulletins(s)
-[*] there are now 196 remaining vulns
-[+] windows version identified as 'Windows 2008 R2 64-bit'
-[*] 
-[M] MS13-009: Cumulative Security Update for Internet Explorer (2792100) - Critical
-[M] MS13-005: Vulnerability in Windows Kernel-Mode Driver Could Allow Elevation of Privilege (2778930) - Important
-[E] MS11-011: Vulnerabilities in Windows Kernel Could Allow Elevation of Privilege (2393802) - Important
-[M] MS10-073: Vulnerabilities in Windows Kernel-Mode Drivers Could Allow Elevation of Privilege (981957) - Important
-[M] MS10-061: Vulnerability in Print Spooler Service Could Allow Remote Code Execution (2347290) - Critical
-[E] MS10-059: Vulnerabilities in the Tracing Feature for Services Could Allow Elevation of Privilege (982799) - Important
-[E] MS10-047: Vulnerabilities in Windows Kernel Could Allow Elevation of Privilege (981852) - Important
-[M] MS10-002: Cumulative Security Update for Internet Explorer (978207) - Critical
-[M] MS09-072: Cumulative Security Update for Internet Explorer (976325) - Critical
+# update 
+pipenv run ./windows-exploit-suggester.py --update
+
+# run
+pipenv run ./windows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --systeminfo win7sp1-systeminfo.txt 
+
+# possible exploits for an operating system can be used without hotfix data
+pipenv run ./indows-exploit-suggester.py --database 2014-06-06-mssb.xlsx --ostext 'windows server 2008 r2' 
 ```
 
-LIMITATIONS
-===========
+# LIMITATIONS
 Currently, if the 'systeminfo' command reveals 'File 1' as the output for
 the hotfixes, it will not be able to determine which are installed on
 the target. If this occurs, the list of hotfixes will need to be 
@@ -103,8 +58,7 @@ on the target Windows operating system. If you receive the 'File 1'
 output, try executing 'wmic qfe list full' and feed that as input
 with the --hotfixes flag, along with the 'systeminfo'
 
-LICENSE
-=======
+# LICENSE
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
